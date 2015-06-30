@@ -9,7 +9,6 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-  
   <context-param>
     <param-name>driver</param-name>
     <param-value>com.mysql.jdbc.Driver</param-value>
@@ -64,7 +63,6 @@
     <servlet-name>RegisterServlet</servlet-name>
     <url-pattern>/RegisterServlet</url-pattern>
   </servlet-mapping>
-  
   <filter>
     <display-name>BlogPostFilter</display-name>
     <filter-name>BlogPostFilter</filter-name>
@@ -74,7 +72,7 @@
     <filter-name>BlogPostFilter</filter-name>
     <url-pattern>/blogpost</url-pattern>
   </filter-mapping>
-   <servlet>
+  <servlet>
     <description></description>
     <display-name>Blogpost</display-name>
     <servlet-name>Blogpost</servlet-name>
@@ -84,8 +82,6 @@
     <servlet-name>Blogpost</servlet-name>
     <url-pattern>/blogpost</url-pattern>
   </servlet-mapping>
-  
-  
   <servlet>
     <description></description>
     <display-name>DisplayImage</display-name>
@@ -96,8 +92,6 @@
     <servlet-name>DisplayImage</servlet-name>
     <url-pattern>/DisplayImage</url-pattern>
   </servlet-mapping>
-  
-  
   <servlet>
     <description></description>
     <display-name>SessionExpire</display-name>
@@ -108,10 +102,18 @@
     <servlet-name>SessionExpire</servlet-name>
     <url-pattern>/logout</url-pattern>
   </servlet-mapping>
- 
- 
+  
+   <filter>
+    <display-name>ProfilePageFilter</display-name>
+    <filter-name>ProfilePageFilter</filter-name>
+    <filter-class>com.javaConnect.filter.ProfilePageFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>ProfilePageFilter</filter-name>
+    <url-pattern>/profile</url-pattern>
+  </filter-mapping>
+  
   <servlet>
-    <description></description>
     <display-name>ProfilePage</display-name>
     <servlet-name>ProfilePage</servlet-name>
     <servlet-class>com.javaConnect.main.controller.ProfilePage</servlet-class>
@@ -120,9 +122,8 @@
     <servlet-name>ProfilePage</servlet-name>
     <url-pattern>/profile</url-pattern>
   </servlet-mapping>
- 
+  
   <servlet>
-    <description></description>
     <display-name>ViewPost</display-name>
     <servlet-name>ViewPost</servlet-name>
     <servlet-class>com.javaConnect.main.controller.ViewPost</servlet-class>
@@ -134,5 +135,5 @@
   <listener>
     <listener-class>com.javaConnect.listener.ContextListener</listener-class>
   </listener>
-  
+ 
 </web-app>

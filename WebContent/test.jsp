@@ -1,5 +1,5 @@
+<%@page import="com.javaConnect.main.model.Post"%>
 <%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
-<%@page import="com.javaConnect.auth.model.PostModel"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -21,11 +21,11 @@
 <body>
 	<%
 	//HttpSession session = request.getSession();
-	ArrayList<PostModel> posts = (ArrayList<PostModel>) session.getAttribute("posts");
+	ArrayList<Post> posts = (ArrayList<Post>) session.getAttribute("posts");
 	%>
 	
   <ul class="posts" style="margin-top: 10em; ">
-        <%for(PostModel post: posts){ %>
+        <%for(Post post: posts){ %>
             <li class="post">
                 <div class="post-thumbnail">
                 	<% String username = post.getAuthor_name();%>

@@ -7,17 +7,15 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import com.javaConnect.Databases.ConnectionManager;
+import com.javaConnect.main.model.Post;
 
 public class FetchPost {
 	
-	public static ArrayList<PostModel> getPost(){
-		ConnectionManager cm = ConnectionManager.getInstance();
-		Connection conn = cm.getConnection();
+	public static ArrayList<Post> getPost(Connection conn){
 		Statement stmt = null;
 		ResultSet rs = null;
-		PostModel posts = new PostModel();;
-		ArrayList<PostModel> postsList = new ArrayList<PostModel>();
+		Post posts = new Post();;
+		ArrayList<Post> postsList = new ArrayList<Post>();
 		String sql = "select u.username, p.title, p.id, p.timestamp from users as u join posts as p on u.id = p.author_id limit 100";
 		
 		try {
@@ -30,11 +28,11 @@ public class FetchPost {
 				posts.setTimestamp(rs.getString(4));
 				
 				postsList.add(posts);
-				posts = new PostModel();
+				posts = new Post();
 				
 			}
 			if (postsList != null) {
-				for (PostModel post : postsList) {
+				for (Post post : postsList) {
 					System.out.println("### " +post.getAuthor_name());
 					System.out.println("### " +post.getPid());
 
@@ -43,16 +41,13 @@ public class FetchPost {
 			}
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}finally{
 			try {
 				stmt.close();
 				rs.close();
-				cm.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -60,13 +55,11 @@ public class FetchPost {
 	}
 
 	
-	public static PostModel getPost1(String id){
-		ConnectionManager cm = ConnectionManager.getInstance();
-		Connection conn = cm.getConnection();
+	public static Post getPost1(String id, Connection conn){
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		PostModel posts = new PostModel();;
-		ArrayList<PostModel> postsList = new ArrayList<PostModel>();
+		Post posts = new Post();;
+		ArrayList<Post> postsList = new ArrayList<Post>();
 		String sql = "select u.username, p.title, p.body,  p.id, p.timestamp from users as u join posts as p on u.id = p.author_id where p.id= ? ";
 		
 		try {
@@ -88,16 +81,17 @@ public class FetchPost {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
-		}finally{
+		}
+		finally{
 			try {
 				pstmt.close();
 				rs.close();
-				cm.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
+				return null;
 			}
 		}
 		return null;
+		
 	}
 }

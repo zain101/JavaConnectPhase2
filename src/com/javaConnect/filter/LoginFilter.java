@@ -15,8 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.javaConnect.auth.model.FetchPost;
-import com.javaConnect.auth.model.PostModel;
 import com.javaConnect.auth.model.User;
+import com.javaConnect.main.model.Post;
 
 public class LoginFilter implements Filter {
 
@@ -31,13 +31,13 @@ public class LoginFilter implements Filter {
 		user.setPassword(request.getParameter("passwd"));
 		conn = (Connection)context.getAttribute("conn");
 
-		ArrayList<PostModel> posts;
+		ArrayList<Post> posts;
 
 		if(User.authenticate(user, conn) != null){
 			HttpSession session = req.getSession();
 			session.setAttribute("username", user.getUsername());
 			session.setAttribute("id", user.getId());
-			posts = FetchPost.getPost();
+			posts = Post.getPost(conn);
 			if(posts != null)
 				session.setAttribute("posts", posts);
 			request.setAttribute("auth", "success");
