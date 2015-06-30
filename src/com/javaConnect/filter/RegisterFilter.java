@@ -7,6 +7,7 @@ import java.sql.Connection;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -48,8 +49,22 @@ public class RegisterFilter implements Filter {
 		if(inputstream != null)
 			user.setProfilePic(inputstream);
 		conn = (Connection)context.getAttribute("conn");
-		request.setAttribute("user", user);
-		request.setAttribute("conn", conn);
+		
+		
+		if(User.validateUserName(user.getUsername(), conn)){
+			boolean rows = User.insertUser(user, conn);
+			request.setAttribute("validUsername", "success");
+			if(rows){
+				request.setAttribute("status", "true");
+				request.setAttribute("error", "false");
+			}
+			
+		}
+		else{
+			request.setAttribute("validUsername", "failure");
+			request.setAttribute("error", "true");
+			request.setAttribute("status", "false");
+		}
 		
 		chain.doFilter(request, response);
 	}

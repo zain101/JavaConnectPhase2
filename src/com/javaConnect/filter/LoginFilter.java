@@ -2,6 +2,7 @@ package com.javaConnect.filter;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.ArrayList;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -10,7 +11,11 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import com.javaConnect.auth.model.FetchPost;
+import com.javaConnect.auth.model.PostModel;
 import com.javaConnect.auth.model.User;
 
 public class LoginFilter implements Filter {
@@ -21,12 +26,25 @@ public class LoginFilter implements Filter {
 		User user = new User();
 		Connection conn;
 		ServletContext context = request.getServletContext();
+		HttpServletRequest req = (HttpServletRequest) request;
 		user.setEmail(request.getParameter("email"));
 		user.setPassword(request.getParameter("passwd"));
 		conn = (Connection)context.getAttribute("conn");
-		request.setAttribute("user", user);
-		request.setAttribute("conn", conn);
-		
+
+		ArrayList<PostModel> posts;
+
+		if(User.authenticate(user, conn) != null){
+			HttpSession session = req.getSession();
+			session.setAttribute("username", user.getUsername());
+			session.setAttribute("id", user.getId());
+			posts = FetchPost.getPost();
+			if(posts != null)
+				session.setAttribute("posts", posts);
+			request.setAttribute("auth", "success");
+		}
+		else{
+			request.setAttribute("auth", "failure");
+		}
 		chain.doFilter(request, response);
 	}
 

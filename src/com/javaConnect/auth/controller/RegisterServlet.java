@@ -17,21 +17,13 @@ public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		User user = (User) request.getAttribute("user");
-		System.out.println(user);
-		Connection conn = (Connection) request.getAttribute("conn");
-		
-		if(User.validateUserName(user.getUsername(), conn)){
-			boolean rows = User.insertUser(user, conn);
-			if(rows){
-				request.setAttribute("status", "true");
-				request.setAttribute("error", "false");
+		String status = (String) request.getAttribute("validUsername");
+
+		if(status.equals("success")){
 				RequestDispatcher dispatch  = request.getRequestDispatcher("register.jsp");
 				dispatch.forward(request, response);
-			}
-		}else{
-			request.setAttribute("error", "true");
-			request.setAttribute("status", "false");
+		}
+		else{
 			RequestDispatcher dispatch  = request.getRequestDispatcher("register.jsp");
 			dispatch.forward(request, response);
 		}

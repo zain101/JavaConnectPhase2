@@ -20,16 +20,8 @@ public class LoginServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		User user = (User) request.getAttribute("user");
-		ArrayList<PostModel> posts;
-		
-		if(User.authenticate(user, (Connection)request.getAttribute("conn")) != null){
-			HttpSession session = request.getSession();
-			session.setAttribute("username", user.getUsername());
-			session.setAttribute("id", user.getId());
-			posts = FetchPost.getPost();
-			if(posts != null)
-				session.setAttribute("posts", posts);
+		String status = (String) request.getAttribute("auth");
+		if(status.equals("success")){
 			RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 			rd.forward(request, response);
 			
