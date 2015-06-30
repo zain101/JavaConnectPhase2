@@ -25,38 +25,49 @@
     <param-name>password</param-name>
     <param-value>root</param-value>
   </context-param>
- 
+  
   <filter>
-    <display-name>AuthenticateFilter</display-name>
-   	<filter-name>AuthenticateFilter</filter-name>
-    <filter-class>com.javaConnect.filter.AuthenticateFilter</filter-class>
+    <display-name>LoginFilter</display-name>
+    <filter-name>LoginFilter</filter-name>
+    <filter-class>com.javaConnect.filter.LoginFilter</filter-class>
   </filter>
   <filter-mapping>
-    <filter-name>AuthenticateFilter</filter-name>
+    <filter-name>LoginFilter</filter-name>
     <url-pattern>/login</url-pattern>
+  </filter-mapping>
+  <servlet>
+    <description></description>
+    <display-name>LoginServlet</display-name>
+    <servlet-name>LoginServlet</servlet-name>
+    <servlet-class>com.javaConnect.auth.controller.LoginServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LoginServlet</servlet-name>
+    <url-pattern>/login</url-pattern>
+  </servlet-mapping>
+
+  <filter>
+    <display-name>RegisterFilter</display-name>
+    <filter-name>RegisterFilter</filter-name>
+    <filter-class>com.javaConnect.filter.RegisterFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>RegisterFilter</filter-name>
+    <url-pattern>/RegisterServlet</url-pattern>
   </filter-mapping>
   
   <servlet>
     <description></description>
-    <display-name>Authenticate</display-name>
-    <servlet-name>Authenticate</servlet-name>
-    <servlet-class>com.javaConnect.auth.controller.Authenticate</servlet-class>
+    <display-name>RegisterServlet</display-name>
+    <servlet-name>RegisterServlet</servlet-name>
+    <servlet-class>com.javaConnect.auth.controller.RegisterServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>Authenticate</servlet-name>
-    <url-pattern>/login</url-pattern>
+    <servlet-name>RegisterServlet</servlet-name>
+    <url-pattern>/RegisterServlet</url-pattern>
   </servlet-mapping>
   
-  <servlet>
-    <description></description>
-    <display-name>RegisterUser</display-name>
-    <servlet-name>RegisterUser</servlet-name>
-    <servlet-class>com.javaConnect.auth.controller.RegisterUser</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>RegisterUser</servlet-name>
-    <url-pattern>/RegisterUser</url-pattern>
-  </servlet-mapping>
+  
   <servlet>
     <description></description>
     <display-name>DisplayImage</display-name>
@@ -110,5 +121,5 @@
   <listener>
     <listener-class>com.javaConnect.listener.ContextListener</listener-class>
   </listener>
- 
+
 </web-app>

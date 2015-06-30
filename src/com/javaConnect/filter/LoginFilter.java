@@ -13,7 +13,7 @@ import javax.servlet.ServletResponse;
 
 import com.javaConnect.auth.model.User;
 
-public class AuthenticateFilter implements Filter {
+public class LoginFilter implements Filter {
 
   
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {

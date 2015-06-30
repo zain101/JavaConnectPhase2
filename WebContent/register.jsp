@@ -87,7 +87,7 @@
     }
     %>
     <legend ><h3 style="float: center"><a href="index.jsp">HOME</a></h3> </legend>
-	<form class="form-horizontal" action="RegisterUser" method="POST" enctype="multipart/form-data">
+	<form class="form-horizontal" action="RegisterServlet" method="POST" enctype="multipart/form-data">
   <fieldset>
     <div id="legend">
       <legend class="">Register</legend>

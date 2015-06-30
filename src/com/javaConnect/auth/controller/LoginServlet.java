@@ -15,7 +15,7 @@ import com.javaConnect.auth.model.FetchPost;
 import com.javaConnect.auth.model.PostModel;
 import com.javaConnect.auth.model.User;
 
-public class Authenticate extends HttpServlet {
+public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
