@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="JavaConnect">
+        <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/WebContent/bootstrap-3.3.4-dist"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/WebContent/editor"/>
+        <property name="context-root" value="JavaConnect"/>
+        <property name="java-output-path" value="/JavaConnect/build/classes"/>
+    </wb-module>
+</project-modules>

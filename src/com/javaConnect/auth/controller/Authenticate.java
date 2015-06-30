@@ -1,6 +1,7 @@
 package com.javaConnect.auth.controller;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -10,26 +11,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.javaConnect.auth.model.AuthenticateUser;
 import com.javaConnect.auth.model.FetchPost;
 import com.javaConnect.auth.model.PostModel;
 import com.javaConnect.auth.model.User;
 
-/**
- * Servlet implementation class Authenticate
- */
 public class Authenticate extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		String email = request.getParameter("email");
-		String password  = request.getParameter("passwd");
-		User user = new User();
-		user.setEmail(email);
-		user.setPassword(password);
+		User user = (User) request.getAttribute("user");
 		ArrayList<PostModel> posts;
-		if(AuthenticateUser.authenticate(user) != null){
+		
+		if(User.authenticate(user, (Connection)request.getAttribute("conn")) != null){
 			HttpSession session = request.getSession();
 			session.setAttribute("username", user.getUsername());
 			session.setAttribute("id", user.getId());

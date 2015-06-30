@@ -1,6 +1,10 @@
 package com.javaConnect.auth.model;
 
 import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class User {
 	private int id;
@@ -75,5 +79,34 @@ public class User {
 		this.id = id;
 	}
 
+	public static User authenticate(User user, Connection conn){
+		PreparedStatement pstmt =null;
+		ResultSet rs =null;
+		try {
+			pstmt = conn.prepareStatement("select id, username from users where email = ? and password = ?");
+			pstmt.setString(1, user.getEmail());
+			pstmt.setString(2, user.getPassword());
+			rs = pstmt.executeQuery();
+			if(rs.next()){
+				user.setId(rs.getInt(1));
+				user.setUsername(rs.getString(2));
+				return user;
+			}
+			return null;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		finally{
+			try {
+				pstmt.close();
+				if(rs!=null)
+				rs.close();			
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+	}
 
 }
