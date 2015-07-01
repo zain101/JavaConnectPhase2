@@ -2,12 +2,7 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
   <display-name>JavaConnect</display-name>
   <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-    <welcome-file>index.htm</welcome-file>
     <welcome-file>index.jsp</welcome-file>
-    <welcome-file>default.html</welcome-file>
-    <welcome-file>default.htm</welcome-file>
-    <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
   <context-param>
     <param-name>driver</param-name>
@@ -102,8 +97,7 @@
     <servlet-name>SessionExpire</servlet-name>
     <url-pattern>/logout</url-pattern>
   </servlet-mapping>
-  
-   <filter>
+  <filter>
     <display-name>ProfilePageFilter</display-name>
     <filter-name>ProfilePageFilter</filter-name>
     <filter-class>com.javaConnect.filter.ProfilePageFilter</filter-class>
@@ -112,28 +106,35 @@
     <filter-name>ProfilePageFilter</filter-name>
     <url-pattern>/profile</url-pattern>
   </filter-mapping>
-  
   <servlet>
-    <display-name>ProfilePage</display-name>
-    <servlet-name>ProfilePage</servlet-name>
-    <servlet-class>com.javaConnect.main.controller.ProfilePage</servlet-class>
+    <display-name>ProfilePageServlet</display-name>
+    <servlet-name>ProfilePageServlet</servlet-name>
+    <servlet-class>com.javaConnect.main.controller.ProfilePageServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>ProfilePage</servlet-name>
+    <servlet-name>ProfilePageServlet</servlet-name>
     <url-pattern>/profile</url-pattern>
   </servlet-mapping>
-  
   <servlet>
-    <display-name>ViewPost</display-name>
-    <servlet-name>ViewPost</servlet-name>
-    <servlet-class>com.javaConnect.main.controller.ViewPost</servlet-class>
+    <display-name>ViewPostServlet</display-name>
+    <servlet-name>ViewPostServlet</servlet-name>
+    <servlet-class>com.javaConnect.main.controller.ViewPostServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>ViewPost</servlet-name>
+    <servlet-name>ViewPostServlet</servlet-name>
     <url-pattern>/post</url-pattern>
   </servlet-mapping>
   <listener>
     <listener-class>com.javaConnect.listener.ContextListener</listener-class>
   </listener>
- 
+  <servlet>
+    <description></description>
+    <display-name>UserListServlet</display-name>
+    <servlet-name>UserListServlet</servlet-name>
+    <servlet-class>com.javaConnect.main.controller.UserListServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserListServlet</servlet-name>
+    <url-pattern>/UserListServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -5,7 +5,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class User {
@@ -19,7 +21,13 @@ public class User {
 	private String member_since;
 	private InputStream profilePic;
 	private int confirm ;
-	
+	private int postCount;
+	public int getPostCount() {
+		return postCount;
+	}
+	public void setPostCount(int postCount) {
+		this.postCount = postCount;
+	}
 	public String getUsername() {
 		return username;
 	}
@@ -198,5 +206,34 @@ public class User {
 					e.printStackTrace();
 				}
 			}
+		}
+		
+		public static ArrayList<User> getUserList(Connection conn){
+			Statement stmt = null;
+			ResultSet rs = null;
+			User user ;
+			ArrayList<User> userList = new ArrayList<User>();
+			try {
+				stmt = conn.createStatement();
+				rs  = stmt.executeQuery("select u.username, u.email, u.about_me, u.last_seen, u.location, u.member_since, IFNULL(COUNT(p.author_id), 0) as postCount from users as u left join (select author_id from posts) as p on p.author_id = u.id group by u.id order by postCount desc");
+				while(rs.next()){
+					user = new User();
+					user.setUsername(rs.getString(1));
+					user.setEmail(rs.getString(2));
+					user.setAbout(rs.getString(3));
+					user.setLast_seen(rs.getString(4));
+					user.setLocation(rs.getString(5));
+					user.setMember_since(rs.getString(6));
+					user.setPostCount(rs.getInt(7));
+					userList.add(user);
+					
+				}
+				return userList;
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+			return null;
 		}
 }

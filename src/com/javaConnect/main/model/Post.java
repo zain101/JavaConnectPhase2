@@ -73,7 +73,6 @@ public class Post {
 				return true;
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		}
@@ -81,7 +80,6 @@ public class Post {
 			try {
 				pstmt.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -134,9 +132,9 @@ public class Post {
 	
 	public static Post getPost1(String id, Connection conn){
 		PreparedStatement pstmt = null;
+		System.out.println("from get post 1" + conn);
 		ResultSet rs = null;
 		Post posts = new Post();;
-		ArrayList<Post> postsList = new ArrayList<Post>();
 		String sql = "select u.username, p.title, p.body,  p.id, p.timestamp from users as u join posts as p on u.id = p.author_id where p.id= ? ";
 		
 		try {

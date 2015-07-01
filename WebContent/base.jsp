@@ -21,7 +21,7 @@
           <ul class="nav navbar-nav">
             <li class="active"><a href="index.jsp">Home</a></li>
             <li><a href="profile?username=<%=(String)session.getAttribute("username") %>">Profile</a></li>
-            <li><a href="#contact" >Users</a></li>
+            <li><a href="UserListServlet" target="_blank" >Users</a></li>
             <li><a href="editor.jsp" >Create</a></li>
 
           </ul>

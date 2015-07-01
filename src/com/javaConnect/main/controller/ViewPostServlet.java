@@ -10,20 +10,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.javaConnect.auth.model.FetchPost;
 import com.javaConnect.main.model.Post;
 
 /**
  * Servlet implementation class ViewPost
  */
-public class ViewPost extends HttpServlet {
+public class ViewPostServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ServletContext context = request.getServletContext();
 		String id = request.getParameter("id");
 		Post post = new Post();
-		Connection conn =  (Connection) request.getAttribute("conn");
+		Connection conn =  (Connection) context.getAttribute("conn");
 		post = Post.getPost1(id, conn);
 		String str = post.getBody();
 		/*PegDownProcessor peg = new PegDownProcessor();

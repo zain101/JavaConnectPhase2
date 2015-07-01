@@ -1,4 +1,4 @@
-<%@page import="com.javaConnect.auth.model.PostModel"%>
+<%@page import="com.javaConnect.main.model.Post"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -28,7 +28,7 @@
 
    	<%
 	//HttpSession session = request.getSession();
-		PostModel post =(PostModel) request.getAttribute("post");
+		Post post =(Post) request.getAttribute("post");
 	%>
 	
   <ul class="posts" style="margin-top: 4em; ">

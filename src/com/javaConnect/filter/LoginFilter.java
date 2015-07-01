@@ -14,7 +14,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import com.javaConnect.auth.model.FetchPost;
 import com.javaConnect.auth.model.User;
 import com.javaConnect.main.model.Post;
 
