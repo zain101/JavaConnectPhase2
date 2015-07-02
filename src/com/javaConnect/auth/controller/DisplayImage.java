@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -29,9 +30,8 @@ public class DisplayImage extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		ConnectionManager cm = ConnectionManager.getInstance();
-		Connection conn;
-		conn = cm.getConnection();
+		ServletContext context = request.getServletContext();
+		Connection conn = (Connection)context.getAttribute("conn");
 		ResultSet rs1 = null ;
 		PreparedStatement stmt = null;
 		
@@ -67,7 +67,6 @@ public class DisplayImage extends HttpServlet {
 				if(rs1 != null && stmt !=null){
 				rs1.close();
 				stmt.close();
-				cm.close();
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block

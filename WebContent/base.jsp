@@ -1,3 +1,4 @@
+<%@page import="com.javaConnect.auth.model.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -17,10 +18,15 @@
           <b style="padding-bottom: 10em;">JavaConnect</b><small style="font-size: xx-small;  ">beta</small></span></a>
           
         </div>
+        <% User user = (User)session.getAttribute("user") ;
+        	String username = null;
+        	if(user != null)
+        		username =user.getUsername();
+        %>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li class="active"><a href="index.jsp">Home</a></li>
-            <li><a href="profile?username=<%=(String)session.getAttribute("username") %>">Profile</a></li>
+            <li><a href="profile?username=<%=username%>">Profile</a></li>
             <li><a href="UserListServlet" target="_blank" >Users</a></li>
             <li><a href="editor.jsp" >Create</a></li>
 
@@ -28,16 +34,16 @@
 		<div class="navbar-collapse collapse" >
 		      <li  class="nav navbar-nav navbar-right" style="float: right; padding-top: 1em;">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="color: #FFFFFF; text-decoration: none;">
-              <%String username1;if((username1=(String)session.getAttribute("username")) != null ) {%>
+              <%String username1;if((username1=username) != null ) {%>
 				
               <img  src="DisplayImage?username=<%=username1 %>" height="30px" width="30px">
               <%}%>
               <b>Account</b><span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu" style="float: right;">
-                <% if(session.getAttribute("username") != null ){ %>
-                	<li><a href="#">Hello <%=session.getAttribute("username") %></a></li>
+                <% if(username != null ){ %>
+                	<li><a href="#">Hello <%=user.getUsername() %></a></li>
                 	<li><a href="logout">logout</a></li>
-                	<li><a href="editProfile">edit</a></li>
+                	<li><a href="editProfile.jsp">edit</a></li>
                 
                 <%}else{ %>
                 <li><a href="login.jsp">sign-in</a></li>

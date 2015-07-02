@@ -34,16 +34,16 @@
   <ul class="posts" style="margin-top: 4em; ">
             <li class="post">
                 <div class="post-thumbnail">
-                	<% String username = post.getAuthor_name();%>
+                	<% String username2 = post.getAuthor_name();%>
                    <a href="profile?username=<%=username%>" >
-                <img class="img-rounded profile-thumbnail" src="DisplayImage?username=<%=username %>" height="100px" width="100px" >
+                <img class="img-rounded profile-thumbnail" src="DisplayImage?username=<%=username2 %>" height="100px" width="100px" >
             </a>
                 </div>
                 <div class="post-content" style="padding-left:  5em;">
                     <div class="post-date"><%=post.getTimestamp() %></div>
                     <div class="post-author">
-                        <a href="profile?username=<%=username%>">
-                           <%= username%>
+                        <a href="profile?username=<%=username2%>">
+                           <%= username2%>
                         </a>
                     </div>
                     <div  class="post-body">
@@ -54,7 +54,7 @@
                     <% out.write(str); %>
                     </div>
                     <div class="post-footer">
-                        <%if (session.getAttribute("username").equals(username)){ %>
+                        <%if (user.getUsername().equals(username2)){ %>
                             <a href="edit?id=<%=post.getPid() %>">
                                 <span class="label label-success">Edit</span>
                             </a>

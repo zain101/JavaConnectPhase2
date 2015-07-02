@@ -1,3 +1,4 @@
+<%@page import="com.javaConnect.auth.model.User"%>
 <%@page import="com.javaConnect.main.model.Post"%>
 <%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
 <%@page import="java.util.ArrayList"%>
@@ -20,31 +21,36 @@
 </head>
 <body>
 	<%
-	//HttpSession session = request.getSession();
-	ArrayList<Post> posts = (ArrayList<Post>) session.getAttribute("posts");
+	String difference = (String)request.getAttribute("fromProfile");
+	ArrayList<Post> posts;
+	if( difference != null && difference.equals("true")){
+		 posts = (ArrayList<Post>) request.getAttribute("userList");
+	}else{
+		 posts = (ArrayList<Post>) session.getAttribute("posts");
+	}	
 	%>
 	
   <ul class="posts" style="margin-top: 10em; ">
         <%for(Post post: posts){ %>
             <li class="post">
                 <div class="post-thumbnail">
-                	<% String username = post.getAuthor_name();%>
-                   <a href="profile?username=<%=username%>" >
-                <img class="img-rounded profile-thumbnail" src="DisplayImage?username=<%=username %>" height="50px" width="50px" >
+                	<% String username2 = post.getAuthor_name();%>
+                   <a href="profile?username=<%=username2%>" >
+                <img class="img-rounded profile-thumbnail" src="DisplayImage?username=<%=username2 %>" height="50px" width="50px" >
             </a>
                 </div>
                 <div class="post-content">
                     <div class="post-date"><%=post.getTimestamp() %></div>
                     <div class="post-author">
-                        <a href="profile?username=<%=username%>">
-                           <%= username%>
+                        <a href="profile?username=<%=username2%>">
+                           <%= username2%>
                         </a>
                     </div>
                     <div  class="post-body sample">
                    <h1> <%=post.getTitle() %></h1>
                     </div>
                     <div class="post-footer">
-                        <%if (session.getAttribute("username").equals(username)){ %>
+                        <%if (user.getUsername().equals(username2)){ %>
                             <a href="edit?id=<%=post.getPid() %>">
                                 <span class="label label-success">Edit</span>
                             </a>

@@ -22,6 +22,22 @@ public class User {
 	private InputStream profilePic;
 	private int confirm ;
 	private int postCount;
+	private int roleId;
+	private String oldPassword;
+	private String oldUsername;
+	
+	public String getOldUsername() {
+		return oldUsername;
+	}
+	public void setOldUsername(String oldUsername) {
+		this.oldUsername = oldUsername;
+	}
+	public String getOldPassword() {
+		return oldPassword;
+	}
+	public void setOldPassword(String oldPassword) {
+		this.oldPassword = oldPassword;
+	}
 	public int getPostCount() {
 		return postCount;
 	}
@@ -93,13 +109,17 @@ public class User {
 		PreparedStatement pstmt =null;
 		ResultSet rs =null;
 		try {
-			pstmt = conn.prepareStatement("select id, username from users where email = ? and password = ?");
+			pstmt = conn.prepareStatement("select id, username, email, location, about_me, role_id from users where email = ? and password = ?");
 			pstmt.setString(1, user.getEmail());
 			pstmt.setString(2, user.getPassword());
 			rs = pstmt.executeQuery();
 			if(rs.next()){
 				user.setId(rs.getInt(1));
 				user.setUsername(rs.getString(2));
+				user.setEmail(rs.getString(3));
+				user.setLocation(rs.getString(4));
+				user.setAbout(rs.getString(5));
+				user.setRoleId(rs.getInt(6));
 				return user;
 			}
 			return null;
@@ -179,7 +199,7 @@ public class User {
 		public static User getProfile(User user, Connection conn){
 			PreparedStatement pstmt = null;
 			ResultSet rs= null;
-			String sql = "select username, email, about_me, last_seen, location, member_since from users where username = ?";
+			String sql = "select  username, email, about_me, last_seen, location, member_since, id from users where username = ?";
 			try {
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, user.getUsername());
@@ -191,6 +211,7 @@ public class User {
 					user.setLast_seen(rs.getString(4));
 					user.setLocation(rs.getString(5));
 					user.setMember_since(rs.getString(6));
+					user.setId(rs.getInt(7));
 					return user;
 				}
 				return null;
@@ -235,5 +256,47 @@ public class User {
 			}
 			
 			return null;
+		}
+		public int getRoleId() {
+			return roleId;
+		}
+		public void setRoleId(int roleId) {
+			this.roleId = roleId;
+		}
+		
+		public static boolean editProfile(User user, Connection conn){
+			PreparedStatement pstmt = null;
+			String sql = "update users set username = ?, email = ?, password  = ?, about_me = ?, location = ?, profile_pic = ? where password= ? and username = ?";
+			int rows=0;
+			try {
+				System.out.println("old passwd: " + user.getOldPassword());
+				System.out.println("new username" + user.getOldUsername());
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, user.getUsername());
+				pstmt.setString(2, user.getEmail());
+				pstmt.setString(3, user.getPassword());
+				pstmt.setString(4, user.getAbout());
+				pstmt.setString(5, user.getLocation());
+				if (user.getProfilePic() != null)
+					pstmt.setBlob(6, user.getProfilePic());
+				pstmt.setString(7, user.getOldPassword());
+				pstmt.setString(8, user.getOldUsername());
+				rows = pstmt.executeUpdate();
+				System.out.println("rows: "+ rows);
+				if(rows > 0)
+					return true;
+							
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			finally{
+				try {
+					//conn.commit();
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			return false;
 		}
 }

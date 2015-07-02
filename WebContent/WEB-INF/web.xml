@@ -137,4 +137,36 @@
     <servlet-name>UserListServlet</servlet-name>
     <url-pattern>/UserListServlet</url-pattern>
   </servlet-mapping>
+  <filter>
+    <display-name>EditProfileFilter</display-name>
+    <filter-name>EditProfileFilter</filter-name>
+    <filter-class>com.javaConnect.filter.EditProfileFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>EditProfileFilter</filter-name>
+    <url-pattern>/EditProfileServlet</url-pattern>
+  </filter-mapping>
+  <servlet>
+    <description></description>
+    <display-name>EditProfileServlet</display-name>
+    <servlet-name>EditProfileServlet</servlet-name>
+    <servlet-class>com.javaConnect.auth.controller.EditProfileServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EditProfileServlet</servlet-name>
+    <url-pattern>/EditProfileServlet</url-pattern>
+  </servlet-mapping>
+  
+  
+  <servlet>
+    <description></description>
+    <display-name>EditPostServlet</display-name>
+    <servlet-name>EditPostServlet</servlet-name>
+    <servlet-class>com.javaConnect.main.controller.EditPostServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EditPostServlet</servlet-name>
+    <url-pattern>/edit</url-pattern>
+  </servlet-mapping>
+  
 </web-app>

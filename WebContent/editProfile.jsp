@@ -1,18 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="bootstrap-3.3.4-dist/brand.ico">
-
-    <title>SignUp</title>
-	<style type="text/css">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
       body {
         padding-top: 40px;
         padding-bottom: 40px;
@@ -53,51 +47,30 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
     
-  </head>
-
-  <body>
+</head>
+<body>
+<c:set var="user" value="${sessionScope.user}"></c:set>
     <div class="container">
-    <%	
-    	String status = (String)request.getAttribute("status");
-    	if ( status!=null && status.equals("true"))
-    	{
-    %>
-	    <div class="alert alert-success alert-dismissible" role="alert">
-		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-	  			<span aria-hidden="true">&times;</span>
-		</button>
-	    <b>You have registered successfully</b></div>
-    
-    <%
-    }
-    %>
-    <%	
-    	String error = (String)request.getAttribute("error");
-    	if ( status!=null && error.equals("true"))
-    	{
-    	
-    %>
-	    <div class="alert alert-danger alert-dismissible" role="alert">
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  <strong>Warning!</strong> Username already exist choose a different username
-</div>
-    
-    <%
-    }
-    %>
-    <legend ><h3 style="float: center"><a href="index.jsp">HOME</a></h3> </legend>
-	<form class="form-horizontal" action="RegisterServlet" method="post" enctype="multipart/form-data">
-  <fieldset>
   
+    <legend ><h3 style="float: center"><a href="index.jsp">HOME</a></h3> </legend>
+    
+	<form class="form-horizontal" action="EditProfileServlet" method="post" enctype="multipart/form-data">
+  <fieldset>
     <div id="legend">
-      <legend class="">Register</legend>
+      <legend class="">Edit Profile</legend>
     </div>
     <div class="control-group">
-      <!-- Username -->
-      <label class="control-label"  for="username">Username</label>
+      <label class="control-label"  for="oldUsername">Old Username</label>
       <div class="controls">
-        <input type="text" id="username" name="username" placeholder="username" class="input-xlarge">
+        <input type="text" id="oldUsername" name="oldUsername"  class="input-xlarge"  value="${user.username }">
         <p class="help-block">Username can contain any letters or numbers, without spaces</p>
+      </div>
+    </div>
+   <div class="control-group">
+      <label class="control-label"  for="username">New Username</label>
+      <div class="controls">
+        <input type="text" id="username" name="username"  class="input-xlarge" value="${user.username }">
+        <p class="help-block">Username</p>
       </div>
     </div>
  
@@ -105,33 +78,33 @@
       <!-- E-mail -->
       <label class="control-label" for="email">E-mail</label>
       <div class="controls">
-        <input type="text" id="email" name="email" placeholder="Email-ID" class="input-xlarge">
+        <input type="text" id="email" name="email" placeholder="Email-ID" class="input-xlarge" >
         <p class="help-block">Please provide your E-mail</p>
       </div>
     </div>
- 
+  <div class="control-group">
+      <!-- Password -->
+      <label class="control-label"  for="oldPassword">Old Password</label>
+      <div class="controls">
+        <input type="password" id="oldPassword" name="oldPassword" placeholder="type your previous password" class="input-xlarge">
+        <p class="help-block">Old Password</p>
+      </div>
+    </div>
     <div class="control-group">
       <!-- Password-->
-      <label class="control-label" for="password">Password</label>
+      <label class="control-label" for="password">New Password</label>
       <div class="controls">
         <input type="password" id="password" name="password" placeholder="strong passwd" class="input-xlarge">
         <p class="help-block">Password should be at least 4 characters</p>
       </div>
     </div>
  
-    <div class="control-group">
-      <!-- Password -->
-      <label class="control-label"  for="password_confirm">Password (Confirm)</label>
-      <div class="controls">
-        <input type="password" id="password_confirm" name="password_confirm" placeholder="type again" class="input-xlarge">
-        <p class="help-block">Please confirm password</p>
-      </div>
-    </div>
+   
     <div class="control-group">
       <!-- location -->
       <label class="control-label"  for="location">Location</label>
       <div class="controls">
-        <input type="text" id="location" name="location" placeholder="location" class="input-xlarge">
+        <input type="text" id="location" name="location" placeholder="location" class="input-xlarge" value="${user.location }">
         <p class="help-block">Where you live</p>
       </div>
     </div>
@@ -139,11 +112,12 @@
       <!-- about -->
       <label class="control-label"  for="about">About You</label>
       <div class="controls">
-        <textarea  id="about" name="about_you"  rows="5" cols="60" placeholder="something about you" class="input-xlarge"></textarea>
+        <textarea  id="about" name="about_you"  rows="5" cols="60"  class="input-xlarge"  >${user.about}</textarea>
         <p class="help-block">A statement that defines you</p>
       </div>
     </div>
-     <div class="control-group">
+    
+    <div class="control-group">
       <!-- about -->
       <label class="control-label"  for="pic">Profile Picture</label>
       <div class="controls">
@@ -152,10 +126,11 @@
       </div>
     </div>
  
+ 
     <div class="control-group">
       <!-- Button -->
       <div class="controls">
-        <button class="btn  btn-primary">Register</button>
+        <button class="btn  btn-primary">Submit</button>
       </div>
     </div>
   </fieldset>
@@ -165,5 +140,6 @@
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
-  </body>
+
+</body>
 </html>

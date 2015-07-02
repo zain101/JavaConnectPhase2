@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -39,7 +40,6 @@
 </head>
 <body>
 
-  
 
     <div class="container">
     <h3 style="float: center"><a href="index.jsp">HOME</a></h3> 
@@ -49,30 +49,41 @@
   		<strong>Success!</strong> Your post have been saved
 		</div>
 <%} %>
- <% if (request.getAttribute("postFail") != null){%>
+ <% if (request.getAttribute("postFail") != null || request.getAttribute("permission") != null){%>
     	  <div class="alert alert-danger alert-dismissible" role="alert">
 		  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 		  <strong>Warning!</strong> Better check yourself, you're not looking too good.
 		  </div>
 <%} %>
-    <form action="blogpost" method="post">
+<c:set var="post" value="${requestScope.post }"></c:set>
+ 	<form action="blogpost" method="post">
  		        <h1>PageDown-Bootstrap Demo Page</h1>
-		<p><b>Title: </b> <input type="text" name="title"></p>
-        <div class="wmd-panel">
-            <div id="wmd-button-bar"></div>
-<textarea class="wmd-input" id="wmd-input" name="post">
-This is the *first* editor.
-------------------------------
+				<p><b>Title: </b> <input type="text" name="title" value="${post.title }"> </p>
+				
+				<input type="hidden" name="editSuccess" value = "${requestScope.editSuccess}">
+        		<input type="hidden" name="pid" value="${post.pid }"/>
 
-Just plain **Markdown**, except that the input is sanitized:
-
-<marquee>I'm the ghost from the past!</marquee>
-</textarea>
-        </div>
+        	<div class="wmd-panel">
+            	<div id="wmd-button-bar"></div>
+			<textarea class="wmd-input" id="wmd-input" name="post">
+				<c:if test="${post != null }">
+					<c:out value="${post.body }"></c:out>
+				</c:if>
+				<c:if test="${post == null }">
+					This is the *first* editor.
+					------------------------------
+				
+					Just plain **Markdown**, except that the input is sanitized:
+	
+					<marquee>I'm the ghost from the past!</marquee>
+				</c:if>
+				
+			</textarea>
+        	</div>
         <div id="wmd-preview" class="wmd-panel wmd-preview"></div>
    	<button type="submit" class="btn  btn-primary">Save</button>
-   	</form>
-    </div> 
+   </form>
+   </div> 
     
 
     <script type="text/javascript">

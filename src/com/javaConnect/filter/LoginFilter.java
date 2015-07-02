@@ -32,10 +32,9 @@ public class LoginFilter implements Filter {
 
 		ArrayList<Post> posts;
 
-		if(User.authenticate(user, conn) != null){
+		if((user=User.authenticate(user, conn)) != null){
 			HttpSession session = req.getSession();
-			session.setAttribute("username", user.getUsername());
-			session.setAttribute("id", user.getId());
+			session.setAttribute("user", user);
 			posts = Post.getPost(conn);
 			if(posts != null)
 				session.setAttribute("posts", posts);

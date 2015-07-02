@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import com.javaConnect.auth.model.User;
+
 public class Post {
 	private  String  body;
 	private  String  timestamp;
@@ -168,5 +170,96 @@ public class Post {
 		}
 		return null;
 		
+	}
+	
+	public static Post checkEditPermission(Post post, int pid, int uid, Connection conn){
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement("select title, body from posts where id = ? and author_id = ? ");
+			pstmt.setInt(1, pid);
+			pstmt.setInt(2, uid);
+			rs = pstmt.executeQuery();
+			if(rs.next()){
+				post.setTitle(rs.getString(1));
+				post.setBody(rs.getString(2));
+				return post;
+			}
+			else{
+				return null;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		finally{
+			try {
+				pstmt.close();
+				rs.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public static void updatePost(Post post, Connection conn){
+		int rows =0;
+		try (
+				PreparedStatement pstmt = conn.prepareStatement("update posts set title = ?, body = ? where id = ? and author_id = ?");
+				){
+			pstmt.setString(1, post.getTitle());
+			pstmt.setString(2, post.getBody());
+			pstmt.setInt(3, post.getPid());
+			pstmt.setInt(4, post.getAuthor_id());
+			rows = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public static ArrayList<Post> getUserPosts(User user, Connection conn){
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Post posts = new Post();;
+		ArrayList<Post> postsList = new ArrayList<Post>();
+		String sql = "select u.username, p.title, p.id, p.timestamp from users as u join posts as p on u.id = p.author_id  where u.id = ? ";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, user.getId());
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				posts.setAuthor_name(rs.getString(1));
+				posts.setTitle(rs.getString(2));
+				posts.setPid(rs.getInt(3));
+				posts.setTimestamp(rs.getString(4));
+				
+				postsList.add(posts);
+				posts = new Post();
+				
+			}
+			if (postsList != null) {
+				for (Post post : postsList) {
+					System.out.println("### " +post.getAuthor_name());
+					System.out.println("### " +post.getPid());
+
+				}
+				return postsList;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}finally{
+			try {
+				pstmt.close();
+				rs.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
 	}
 }

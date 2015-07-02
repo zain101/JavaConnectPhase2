@@ -78,6 +78,34 @@
 	  </div>
 
 	<%} %>    
+	  <%	
+    	String status = (String)request.getAttribute("status");
+    	if ( status!=null && status.equals("true"))
+    	{
+    %>
+	    <div class="alert alert-success alert-dismissible" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	  			<span aria-hidden="true">&times;</span>
+		</button>
+	    <b>You have registered successfully</b></div>
+    
+    <%
+    }
+    %>
+    <%	
+    	String error = (String)request.getAttribute("error");
+    	if ( status!=null && error.equals("true"))
+    	{
+    	
+    %>
+	    <div class="alert alert-danger alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong>Warning!</strong> Old username and Password did not match
+</div>
+    
+    <%
+    }
+    %>
     <div class="container">
       <form class="form-signin" action="login" method="post" >
       <div class="container">
