@@ -13,7 +13,8 @@ public class ProfilePageServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String status = (String) request.getAttribute("status");
-		if(status.equals("success")){
+		String redirect = (String) request.getAttribute("message");
+		if(redirect != null || status.equals("success")  ){
 			RequestDispatcher rd = request.getRequestDispatcher("user.jsp");
 			rd.forward(request, response);
 		}

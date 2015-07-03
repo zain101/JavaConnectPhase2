@@ -40,7 +40,6 @@ div.boxing:hover{
 
 <br /><br /><br /><br />
 <c:set  var="ul" value="${requestScope.userList}"></c:set>
-      <c:out value="${current.username}" />
 
 			 
 	

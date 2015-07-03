@@ -32,6 +32,7 @@ public class ProfilePageFilter implements Filter {
 		HttpSession session =  req.getSession();
 		user = User.getProfile(user, conn);
 		userPost = Post.getUserPosts(user, conn);
+		System.out.println("user is "+ user.getUsername());
 		if(user != null && userPost != null){
 			request.setAttribute("userList",userPost);
 			request.setAttribute("fromProfile", "true");

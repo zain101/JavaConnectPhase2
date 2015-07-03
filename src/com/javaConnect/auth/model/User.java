@@ -25,7 +25,8 @@ public class User {
 	private int roleId;
 	private String oldPassword;
 	private String oldUsername;
-	
+	private int followerCount;
+	private int followedCount;
 	public String getOldUsername() {
 		return oldUsername;
 	}
@@ -199,10 +200,14 @@ public class User {
 		public static User getProfile(User user, Connection conn){
 			PreparedStatement pstmt = null;
 			ResultSet rs= null;
-			String sql = "select  username, email, about_me, last_seen, location, member_since, id from users where username = ?";
+			String sql = "select  username, email, about_me, last_seen, location, member_since, id, count(*) as followers , q.following from users "
+					+ "left join follows as f on f.followed_id = id  "
+					+ "join (select   count(*) as following  from users "
+					+ "join follows as ff on ff.follower_id = id where username = ? ) as q where username = ? ";
 			try {
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, user.getUsername());
+				pstmt.setString(2, user.getUsername());
 				rs = pstmt.executeQuery();
 				if(rs.next()){
 					user.setUsername(rs.getString(1));
@@ -212,6 +217,8 @@ public class User {
 					user.setLocation(rs.getString(5));
 					user.setMember_since(rs.getString(6));
 					user.setId(rs.getInt(7));
+					user.setFollowerCount(rs.getInt(8));
+					user.setFollowedCount(rs.getInt(9));
 					return user;
 				}
 				return null;
@@ -299,4 +306,18 @@ public class User {
 			}
 			return false;
 		}
+		public int getFollowerCount() {
+			return followerCount;
+		}
+		public void setFollowerCount(int followerCount) {
+			this.followerCount = followerCount;
+		}
+		public int getFollowedCount() {
+			return followedCount;
+		}
+		public void setFollowedCount(int followedCount) {
+			this.followedCount = followedCount;
+		}
+		
+		
 }

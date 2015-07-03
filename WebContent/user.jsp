@@ -1,3 +1,5 @@
+<%@page import="java.sql.Connection"%>
+<%@page import="com.javaConnect.main.model.Follow"%>
 <%@page import="com.javaConnect.auth.model.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -25,9 +27,24 @@
   
   <body role="document">
      <%@ include file="base.jsp" %>
-	<% User user1 = (User)request.getAttribute("user1"); %>
-	<br><br>
+  
+	<% User user1 = (User)session.getAttribute("user1");
+		if(user1 == null)
+			user1 = (User) request.getAttribute("user1");
+		ServletContext context  = request.getServletContext();
+		Connection conn = (Connection)context.getAttribute("conn");
+	%>
+
+	
     <div class="page-header" style="padding-left: 2em; padding-top: 3em;">
+    <%if (request.getAttribute("message") != null)  {%>
+    	
+	  <div class="alert alert-warning alert-dismissible" role="alert">
+	  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	  <strong>Warning!</strong> <%=request.getAttribute("message") %>
+	  </div>
+
+	<%} %>  
     <img class="img-rounded profile-thumbnail" src="DisplayImage?username=<%=user1.getUsername()%>" height="275px" width="275px" />
 <div class="profile-header" style="padding-left: 8em; padding-top: 1em;">
     <h1><%=user1.getUsername() %></h1>
@@ -46,11 +63,33 @@
     </p>
 
     <p>
-             <%if(user1.getUsername().equals(username1)){ %>
+             <%if(user1 != null && user1.getUsername().equals(username1)){ %>
                 <a class="btn btn-warning" href="{{ url_for('main.edit_profile') }}">Edit Profile</a>
             <%} %>
     </p>
     <p>
+    	<%if ((user1 != null) && (!user1.getUsername().equals(username1))) {%>
+            <% if( Follow.notFollowing(user.getId(), user1.getUsername(), conn)) {%>
+                <a href="follow?user=<%=user1.getUsername()%>" class="btn btn-primary">
+                    Follow
+                </a>
+            <%}else {%>
+                <a href="unfollow?user=<%=user1.getUsername()%>" class="btn btn-default">
+                    Unfollow
+                </a>
+            <%} %>
+        <%} %>
+        
+        <a href="follower?str=followers&id=<%=user1.getId() %>" >
+            Followers: <span class="badge label-danger"><%=user1.getFollowerCount() %></span>
+        </a>
+        <a href="follower?str=following&id=<%=user1.getId() %>">
+            Following: <span class="label label-info"><%=user1.getFollowedCount() %></span>
+        </a>
+        <% System.out.println("tada...................");%>
+        <%if ( ! Follow.notFollowing(user.getId(), user1.getUsername() , conn)){ %>
+            | <span class="label label-success">Follows you</span>
+            <%} %>
       </p>
 
 <br />

@@ -156,8 +156,6 @@
     <servlet-name>EditProfileServlet</servlet-name>
     <url-pattern>/EditProfileServlet</url-pattern>
   </servlet-mapping>
-  
-  
   <servlet>
     <description></description>
     <display-name>EditPostServlet</display-name>
@@ -168,5 +166,35 @@
     <servlet-name>EditPostServlet</servlet-name>
     <url-pattern>/edit</url-pattern>
   </servlet-mapping>
-  
+  <servlet>
+    <description></description>
+    <display-name>FollowServlet</display-name>
+    <servlet-name>FollowServlet</servlet-name>
+    <servlet-class>com.javaConnect.main.controller.FollowServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FollowServlet</servlet-name>
+    <url-pattern>/follow</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UnFollowServlet</display-name>
+    <servlet-name>UnFollowServlet</servlet-name>
+    <servlet-class>com.javaConnect.main.controller.UnFollowServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UnFollowServlet</servlet-name>
+    <url-pattern>/unfollow</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>FollowersServlet</display-name>
+    <servlet-name>FollowersServlet</servlet-name>
+    <servlet-class>com.javaConnect.main.controller.FollowersServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FollowersServlet</servlet-name>
+    <url-pattern>/follower</url-pattern>
+  </servlet-mapping>
+ 
 </web-app>

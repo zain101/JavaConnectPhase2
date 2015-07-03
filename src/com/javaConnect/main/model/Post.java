@@ -93,7 +93,7 @@ public class Post {
 		ResultSet rs = null;
 		Post posts = new Post();;
 		ArrayList<Post> postsList = new ArrayList<Post>();
-		String sql = "select u.username, p.title, p.id, p.timestamp from users as u join posts as p on u.id = p.author_id limit 100";
+		String sql = "select u.username, p.title, p.id, p.timestamp from users as u join posts as p on u.id = p.author_id order by p.timestamp desc";
 		
 		try {
 			stmt = conn.createStatement();
